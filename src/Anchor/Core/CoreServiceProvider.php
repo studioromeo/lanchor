@@ -19,6 +19,9 @@ class CoreServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('anchor/core');
+
+		// Include the routes file for anchor
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**
