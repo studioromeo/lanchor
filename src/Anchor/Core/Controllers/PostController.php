@@ -2,7 +2,9 @@
 
 namespace Anchor\Core\Controllers;
 
-class PostController extends \BaseController {
+use Controller;
+
+class PostController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
