@@ -1,5 +1,7 @@
-{{ Form::open(array('route' => 'admin.posts.store'))}}
+@extends('core::layouts.master')
 
-    @include('core::posts/partials/_form');
-
-{{ Form::close(); }}
+@section('content')
+    {{ Form::open(array('route' => 'admin.posts.store'))}}
+        @include('core::posts/partials/_form');
+    {{ Form::close(); }}
+@stop
