@@ -14,4 +14,8 @@
 Route::group(array('prefix' => 'admin'), function()
 {
     Route::resource('posts', 'Anchor\\Core\\Controllers\\PostController');
+    Route::get('posts/{posts}/delete', array(
+        'uses' => 'Anchor\\Core\\Controllers\\PostController@destroy',
+        'as' => 'admin.posts.delete'
+    ));
 });

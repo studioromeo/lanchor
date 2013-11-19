@@ -17,9 +17,9 @@ class CreatePostsTable extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->text('description');
-            $table->text('html');
-            $table->text('css');
-            $table->text('js');
+            $table->text('html')->nullable();
+            $table->text('css')->nullable();
+            $table->text('js')->nullable();
             $table->timestamps();
             $table->integer('author');
             $table->integer('category');

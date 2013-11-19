@@ -3,8 +3,13 @@
 namespace Anchor\Core\Controllers;
 
 use Controller;
+use View;
+use Input;
+use Redirect;
+use Anchor\Core\Models\Post;
 
-class PostController extends Controller {
+class PostController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
@@ -13,8 +18,9 @@ class PostController extends Controller {
 	 */
 	public function index()
 	{
-		//
-		return 'hello world';
+		$posts = Post::all();
+
+		return View::make('core::posts.index', compact('posts'));
 	}
 
 	/**
@@ -24,7 +30,7 @@ class PostController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return View::make('core::posts.create');
 	}
 
 	/**
@@ -34,7 +40,9 @@ class PostController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		Post::create(Input::all());
+
+		return Redirect::route('admin.posts.index');
 	}
 
 	/**
@@ -45,7 +53,7 @@ class PostController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		// nah we dont use this !@@%$£%$&%
 	}
 
 	/**
@@ -56,7 +64,8 @@ class PostController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$post = Post::find($id);
+		return View::make('core::posts.edit', compact('post'));
 	}
 
 	/**
@@ -67,7 +76,13 @@ class PostController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		// updates a post PUT method
+		$post = Post::find($id);
+
+		$post->fill(Input::all());
+		$post->save();
+
+		return Redirect::route('admin.posts.index');
 	}
 
 	/**
@@ -78,7 +93,8 @@ class PostController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		// Remove the post!
+		Post::destroy($id);
+		return Redirect::route('admin.posts.index');
 	}
-
 }
