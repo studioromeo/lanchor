@@ -17,6 +17,7 @@
                 <a href="{{ route('admin.posts.edit', $post->id) }}">
                     <strong>{{ $post->title }}</strong>
                     <span>
+                        {{ $post->updated_at->diffForHumans() }}
                         <em class="status {{ $post->status }}" title="{{ $post->status }}">{{ $post->status }}</em>
                     </span>
                 </a>

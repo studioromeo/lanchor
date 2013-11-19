@@ -14,7 +14,7 @@
                 <nav>
                     <ul>
                         <li class="logo">
-                                {{ link_to_route('admin.posts.index', 'Anchor CMS') }}
+                            {{ link_to_route('admin.posts.index', 'Anchor CMS') }}
                         </li>
                     </ul>
                 </nav>
