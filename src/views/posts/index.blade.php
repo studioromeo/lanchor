@@ -9,7 +9,10 @@
     </hgroup>
     <section class="wrap">
         <nav class="sidebar">
-            <a class="active" href="#">All Categories</a>
+            {{ link_to_route('admin.posts.index', 'All Categories') }}
+            @foreach($categories as $category)
+                {{ link_to_route('admin.posts.filter.category', $category->title, $category->slug) }}
+            @endforeach
         </nav>
         <ul class="main list">
         @foreach($posts as $post)

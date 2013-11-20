@@ -7,6 +7,7 @@ use View;
 use Input;
 use Redirect;
 use Anchor\Core\Models\Post;
+use Anchor\Core\Models\Category;
 
 class PostController extends Controller
 {
@@ -18,9 +19,23 @@ class PostController extends Controller
 	 */
 	public function index()
 	{
-		$posts = Post::orderBy('updated_at', 'desc')->get();
+		$posts      = Post::orderBy('updated_at', 'desc')->get();
+		$categories = Category::all();
 
-		return View::make('core::posts.index', compact('posts'));
+		return View::make('core::posts.index', compact('posts', 'categories'));
+	}
+
+	/**
+	 * //
+	 *
+	 * @return Response
+	 */
+	public function filterByCategory($slug)
+	{
+		$posts      = Category::whereSlug($slug)->first()->posts;
+		$categories = Category::all();
+
+		return View::make('core::posts.index', compact('posts', 'categories'));
 	}
 
 	/**
@@ -30,7 +45,8 @@ class PostController extends Controller
 	 */
 	public function create()
 	{
-		return View::make('core::posts.create');
+		$categories = Category::lists('title', 'id');
+		return View::make('core::posts.create', compact('categories'));
 	}
 
 	/**
@@ -65,7 +81,9 @@ class PostController extends Controller
 	public function edit($id)
 	{
 		$post = Post::find($id);
-		return View::make('core::posts.edit', compact('post'));
+		$categories = Category::lists('title', 'id');
+
+		return View::make('core::posts.edit', compact('post', 'categories'));
 	}
 
 	/**

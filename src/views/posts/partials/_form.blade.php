@@ -32,6 +32,7 @@
         </p>
         <p>
             {{ Form::label('category'); }}
+            {{ Form::select('category', $categories)}}
         </p>
         <p>
             {{ Form::label('Allow Comments'); }}

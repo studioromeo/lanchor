@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Anchor\Core\Models\Category;
 
 class CreateCategoriesTable extends Migration {
 
@@ -16,8 +17,13 @@ class CreateCategoriesTable extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->text('description');
+            $table->text('description')->nullable();
         });
+
+        $category = new Category;
+        $category->title = 'Uncategorised';
+        $category->slug = 'uncategorised';
+        $category->save();
     }
 
     /**

@@ -28,6 +28,12 @@ class PostsControllerTest extends Orchestra\Testbench\TestCase
         $this->assertResponseOk();
     }
 
+    public function testDisplayAdminPostsListByCategory()
+    {
+        $this->call('GET', 'admin/posts/category/uncategorised');
+        $this->assertResponseOk();
+    }
+
     public function testDisplayAdminPostCreate()
     {
         $this->call('GET', 'admin/posts/create');

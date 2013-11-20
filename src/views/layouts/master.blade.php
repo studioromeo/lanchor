@@ -16,6 +16,9 @@
                         <li class="logo">
                             {{ link_to_route('admin.posts.index', 'Anchor CMS') }}
                         </li>
+                        <li {{ (!Request::is('admin/posts*')) ?: 'class="active"' }}>
+                            {{ link_to_route('admin.posts.index', 'Posts') }}
+                        </li>
                     </ul>
                 </nav>
             </div>

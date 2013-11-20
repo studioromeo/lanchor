@@ -16,6 +16,11 @@ Route::group(array('prefix' => 'admin'), function()
     Route::resource('posts', 'Anchor\\Core\\Controllers\\PostController');
     Route::get('posts/{posts}/delete', array(
         'uses' => 'Anchor\\Core\\Controllers\\PostController@destroy',
-        'as' => 'admin.posts.delete'
+        'as'   => 'admin.posts.delete'
+    ));
+
+    Route::get('posts/category/{category}', array(
+        'uses' => 'Anchor\\Core\\Controllers\\PostController@filterByCategory',
+        'as'   => 'admin.posts.filter.category'
     ));
 });

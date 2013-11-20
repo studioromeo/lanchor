@@ -18,4 +18,9 @@ class Post extends Eloquent
         'status',
         'comments'
     );
+
+    public function category()
+    {
+        $this->belongsTo('Anchor\\Core\\Models\\Category');
+    }
 }
