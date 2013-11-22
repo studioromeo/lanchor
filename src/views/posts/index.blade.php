@@ -20,12 +20,11 @@
                 <a href="{{ route('admin.posts.edit', $post->id) }}">
                     <strong>{{ $post->title }}</strong>
                     <span>
-                        {{ $post->updated_at->diffForHumans() }}
+                        <time>{{ $post->updated_at->diffForHumans() }}</time>
                         <em class="status {{ $post->status }}" title="{{ $post->status }}">{{ $post->status }}</em>
                     </span>
+                    <p>{{ $post->description }}</p>
                 </a>
-                <!-- {{ link_to_route('admin.posts.edit', $post->title, array($post->id)) }}
-                {{ link_to_route('admin.posts.delete', '(Delete)', array($post->id)) }} -->
             </li>
         @endforeach
         </ul>
