@@ -19,6 +19,9 @@
                         <li {{ (!Request::is('admin/posts*')) ?: 'class="active"' }}>
                             {{ link_to_route('admin.posts.index', 'Posts') }}
                         </li>
+                        <li {{ (!Request::is('admin/categories*')) ?: 'class="active"' }}>
+                            {{ link_to_route('admin.categories.index', 'Categories') }}
+                        </li>
                     </ul>
                 </nav>
             </div>
