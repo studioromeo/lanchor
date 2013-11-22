@@ -9,9 +9,9 @@
     </hgroup>
     <section class="wrap">
         <nav class="sidebar">
-            {{ link_to_route('admin.posts.index', 'All Categories') }}
+            {{ link_to_route('admin.posts.index', 'All Categories', null, array('class' => Request::is('admin/posts') ? 'active' : '')) }}
             @foreach($categories as $category)
-                {{ link_to_route('admin.posts.filter.category', $category->title, $category->slug) }}
+                {{ link_to_route('admin.posts.filter.category', $category->title, $category->slug, array('class' => Request::is('admin/posts/category/' . $category->slug) ? 'active' : '')) }}
             @endforeach
         </nav>
         <ul class="main list">

@@ -56,7 +56,11 @@ class PostController extends Controller
 	 */
 	public function store()
 	{
-		Post::create(Input::all());
+		$post = new Post;
+		$post->fill(Input::all());
+		$post->author = 1;
+		$post->comments = (bool) Input::get('comments');
+		$post->save();
 
 		return Redirect::route('admin.posts.index');
 	}
@@ -94,10 +98,10 @@ class PostController extends Controller
 	 */
 	public function update($id)
 	{
-		// updates a post PUT method
 		$post = Post::find($id);
 
 		$post->fill(Input::all());
+		$post->comments = (bool) Input::get('comments');
 		$post->save();
 
 		return Redirect::route('admin.posts.index');
