@@ -6,9 +6,9 @@ use Controller;
 use View;
 use Input;
 use Redirect;
-use Anchor\Core\Models\Category;
+use Anchor\Core\Models\User;
 
-class CategoryController extends Controller {
+class UserController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -17,8 +17,9 @@ class CategoryController extends Controller {
 	 */
 	public function index()
 	{
-		$categories = Category::all();
-		return View::make('core::categories.index', compact('categories'));
+		$users = User::all();
+
+		return View::make('core::users.index', compact('users'));
 	}
 
 	/**
@@ -28,7 +29,7 @@ class CategoryController extends Controller {
 	 */
 	public function create()
 	{
-		return View::make('core::categories.create');
+		return View::make('core::users.create');
 	}
 
 	/**
@@ -38,11 +39,11 @@ class CategoryController extends Controller {
 	 */
 	public function store()
 	{
-		$category = new Category;
-		$category->fill(Input::all());
-		$category->save();
+		$user = new User;
+		$user->fill(Input::all());
+		$user->save();
 
-		return Redirect::route('admin.categories.index');
+		return Redirect::route('admin.users.index');
 	}
 
 	/**
@@ -53,9 +54,9 @@ class CategoryController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$category = Category::find($id);
+		$user = User::find($id);
 
-		return View::make('core::categories.edit', compact('category'));
+		return View::make('core::users.edit', compact('user'));
 	}
 
 	/**
@@ -66,12 +67,12 @@ class CategoryController extends Controller {
 	 */
 	public function update($id)
 	{
-		$category = Category::find($id);
+		$user = User::find($id);
 
-		$category->fill(Input::all());
-		$category->save();
+		$user->fill(Input::all());
+		$user->save();
 
-		return Redirect::route('admin.categories.index');
+		return Redirect::route('admin.users.index');
 	}
 
 	/**
@@ -82,10 +83,8 @@ class CategoryController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		// If only 1 left then throw error!
-
-		Category::destroy($id);
-		return Redirect::route('admin.categories.index');
+		User::destroy($id);
+		return Redirect::route('admin.users.index');
 	}
 
 }
