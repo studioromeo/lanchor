@@ -28,6 +28,9 @@
                         <li {{ (!Request::is('admin/users*')) ?: 'class="active"' }}>
                             {{ link_to_route('admin.users.index', 'Users') }}
                         </li>
+                        <li {{ (!Request::is('admin/extend*')) ?: 'class="active"' }}>
+                            {{ link_to_route('admin.extend.index', 'Extend') }}
+                        </li>
                     </ul>
                 </nav>
             </div>

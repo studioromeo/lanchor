@@ -48,4 +48,19 @@ Route::group(array('prefix' => 'admin'), function()
         'uses' => 'Anchor\\Core\\Controllers\\UserController@destroy',
         'as'   => 'admin.users.delete'
     ));
+
+    Route::get('extend', array('as' => 'admin.extend.index', function() {
+        return View::make('core::extend/index');
+    }));
+
+    Route::resource('extend/variables', 'Anchor\\Core\\Controllers\\MetadataController');
+    Route::get('extend/variables/{key}/delete', array(
+        'uses' => 'Anchor\\Core\\Controllers\\MetadataController@destroy',
+        'as'   => 'admin.extend.metadata.delete'
+    ));
+
+    Route::get('extend/metadata', array(
+        'uses' => 'Anchor\\Core\\Controllers\\MetadataController@show',
+        'as'   => 'admin.extend.metadata.show'
+    ));
 });
