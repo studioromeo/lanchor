@@ -15,11 +15,6 @@ function search_term()
     return '';
 }
 
-function has_menu_items()
-{
-    return false;
-}
-
 function twitter_account()
 {
     return false;

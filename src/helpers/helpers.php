@@ -16,7 +16,7 @@ function base_url($url = '')
 // @todo
 function theme_url($file = '')
 {
-    return asset('themes/default' . $file);
+    return asset('themes/default/' . ltrim($file, '/'));
 }
 
 function theme_include($file)

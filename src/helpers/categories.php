@@ -55,7 +55,6 @@ function category_url() {
 }
 
 function category_count() {
-    // return Query::table(Base::table('posts'))
-    //     ->where('category', '=', category_id())
-    //     ->where('status', '=', 'published')->count();
+    return Anchor\Core\Models\Category::find(category_id())
+        ->posts()->where('status', 'published')->count();
 }
