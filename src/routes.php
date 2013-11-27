@@ -11,6 +11,13 @@
 |
 */
 
+Route::get('/', function() {
+    $posts = Anchor\Core\Models\Post::all();
+    Registry::put('posts', $posts->getIterator(), 0);
+
+    return View::make('default/posts', compact('posts'));
+});
+
 Route::group(array('prefix' => 'admin'), function()
 {
     Route::resource('posts', 'Anchor\\Core\\Controllers\\PostController');

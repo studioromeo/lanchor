@@ -32,6 +32,11 @@
         ],
         "psr-0": {
             "Anchor\\Core\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers/theme.php",
+            "src/helpers/categories.php",
+            "src/helpers/helpers.php"
+        ]
     }
 }

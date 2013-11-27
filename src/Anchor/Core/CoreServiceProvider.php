@@ -1,6 +1,7 @@
 <?php namespace Anchor\Core;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 class CoreServiceProvider extends ServiceProvider {
 
@@ -20,6 +21,8 @@ class CoreServiceProvider extends ServiceProvider {
 	{
 		$this->package('anchor/core');
 
+		AliasLoader::getInstance()->alias('Registry', 'Anchor\Core\Facades\Registry');
+
 		// Include the routes file for anchor
 		include __DIR__.'/../../routes.php';
 	}
@@ -31,7 +34,9 @@ class CoreServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->bind('registry', function() {
+			return new \Anchor\Core\Services\Registry;
+		});
 	}
 
 	/**
