@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', function() {
+Route::get('/', array('as' => 'posts.index', function() {
     $posts = Anchor\Core\Models\Post::all();
     Registry::put('posts', $posts->getIterator(), 0);
 
     return View::make('default/posts', compact('posts'));
-});
+}));
+
+Route::get('/{category}', array('as' => 'category.index', function($slug) {
+    $posts = Anchor\Core\Models\Category::whereSlug($slug)->first()->posts()->where('status', 'published')->get();
+    Registry::put('posts', $posts->getIterator(), 0);
+
+    return View::make('default/posts', compact('posts'));
+}));
 
 Route::group(array('prefix' => 'admin'), function()
 {

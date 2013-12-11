@@ -8,11 +8,7 @@ class Category extends Eloquent
 {
     public $timestamps = false;
 
-    public $fillable = array(
-        'title',
-        'slug',
-        'description'
-    );
+    protected $guarded = array();
 
     public function posts()
     {

@@ -16,6 +16,7 @@ function total_categories() {
 
 // loop categories
 function categories() {
+
     if( ! total_categories()) return false;
 
     $items = Registry::get('categories');
@@ -49,9 +50,7 @@ function category_description() {
 }
 
 function category_url() {
-    return 'TODO';
-    // die()
-    // return base_url('category/' . category_slug());
+    return URL::route('category.index', array('category' => category_slug()));
 }
 
 function category_count() {

@@ -33,6 +33,7 @@
                         </li>
                     </ul>
                 </nav>
+                {{ link_to_route('posts.index', 'Visit your site', null, array('class' => 'btn', 'target' => '_blank')) }}
             </div>
         </header>
         @yield('content')
