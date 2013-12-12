@@ -6,7 +6,9 @@ use Controller;
 use View;
 use Input;
 use Redirect;
+use Config;
 use Anchor\Core\Models\Metadata;
+use Anchor\Core\Services\Themes;
 
 class MetadataController extends Controller {
 
@@ -54,23 +56,52 @@ class MetadataController extends Controller {
 	 */
 	public function show()
 	{
+		foreach (Config::get('view.paths') as $path) {
+			$themes = Themes::lists($path);
+		}
+
 		$meta = Metadata::whereIn('key', array(
 			'auto_published_comments',
 			'comment_moderation_keys',
 			'comment_notifications',
-			'current_migration',
-			'date_format',
 			'description',
 			'home_page',
-			'last_update_check',
 			'posts_page',
 			'posts_per_page',
 			'sitename',
-			'theme',
-			'update_version'
+			'theme'
 		))->lists('value', 'key');
 
-		return View::make('core::metadata/show', compact('meta'));
+		return View::make('core::metadata/show', compact('meta', 'themes'));
+	}
+
+	/**
+	 * Saves the settings
+	 * @todo  there must be a better way
+	 *
+	 * @return Response
+	 */
+	public function saveSettings()
+	{
+		$settings = array(
+			'auto_published_comments' => true,
+			'comment_moderation_keys' => false,
+			'comment_notifications' => true,
+			'description' => false,
+			// 'home_page' => false,
+			// 'posts_page' => false,
+			'posts_per_page' => false,
+			'sitename' => false,
+			'theme' => false
+		);
+
+		foreach ($settings as $setting => $toggle) {
+			$metadata = Metadata::findOrFail($setting);
+			$metadata->value = ($toggle ? Input::has($setting) : Input::get($setting));
+			$metadata->save();
+		}
+
+		return Redirect::route('admin.extend.metadata.show');
 	}
 
 	/**

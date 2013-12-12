@@ -63,4 +63,9 @@ Route::group(array('prefix' => 'admin'), function()
         'uses' => 'Anchor\\Core\\Controllers\\MetadataController@show',
         'as'   => 'admin.extend.metadata.show'
     ));
+
+    Route::post('extend/metadata', array(
+        'uses' => 'Anchor\\Core\\Controllers\\MetadataController@saveSettings',
+        'as'   => 'admin.extend.metadata.save'
+    ));
 });
