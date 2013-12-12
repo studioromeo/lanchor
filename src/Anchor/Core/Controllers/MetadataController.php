@@ -17,7 +17,7 @@ class MetadataController extends Controller {
 	 */
 	public function index()
 	{
-		$metadata = Metadata::all();
+		$metadata = Metadata::where('key', 'LIKE', 'custom_%')->get();
 		return View::make('core::metadata/index', compact('metadata'));
 	}
 
@@ -38,7 +38,13 @@ class MetadataController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$metadata = new Metadata;
+		$metadata->fill(Input::all());
+		$metadata->key = 'custom_' . $metadata->key;
+
+		$metadata->save();
+
+		return Redirect::route('admin.extend.variables.index');
 	}
 
 	/**
@@ -87,7 +93,13 @@ class MetadataController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$metadata = Metadata::find($id);
+
+		$metadata->fill(Input::all());
+		$metadata->key = 'custom_' . $metadata->key;
+		$metadata->save();
+
+		return Redirect::route('admin.extend.variables.index');
 	}
 
 	/**
@@ -98,7 +110,8 @@ class MetadataController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Metadata::destroy($id);
+		return Redirect::route('admin.extend.variables.index');
 	}
 
 }
