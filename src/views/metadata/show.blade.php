@@ -21,6 +21,13 @@
             </p>
         </fieldset>
         <fieldset class="split">
+            <legend>Appearance</legend>
+            <p>
+                {{ Form::label('theme', 'Current theme:') }}
+                {{ Form::select('theme', $themes, $meta['theme']) }}
+            </p>
+        </fieldset>
+        <fieldset class="split">
             <legend>Comments</legend>
             <p>
                 {{ Form::label('auto_published_comments', 'Auto-allow comments:') }}
@@ -33,13 +40,6 @@
             <p>
                 {{ Form::label('comment_moderation_keys', 'Spam keywords:') }}
                 {{ Form::textarea('comment_moderation_keys', $meta['comment_moderation_keys']) }}
-            </p>
-        </fieldset>
-        <fieldset class="split">
-            <legend>Appearance</legend>
-            <p>
-                {{ Form::label('theme', 'Current theme:') }}
-                {{ Form::select('theme', $themes) }}
             </p>
         </fieldset>
         <aside class="buttons">

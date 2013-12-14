@@ -60,17 +60,7 @@ class MetadataController extends Controller {
 			$themes = Themes::lists($path);
 		}
 
-		$meta = Metadata::whereIn('key', array(
-			'auto_published_comments',
-			'comment_moderation_keys',
-			'comment_notifications',
-			'description',
-			'home_page',
-			'posts_page',
-			'posts_per_page',
-			'sitename',
-			'theme'
-		))->lists('value', 'key');
+		$meta = Metadata::where('key', 'NOT LIKE', 'custom_%')->lists('value', 'key');
 
 		return View::make('core::metadata/show', compact('meta', 'themes'));
 	}
@@ -84,20 +74,20 @@ class MetadataController extends Controller {
 	public function saveSettings()
 	{
 		$settings = array(
-			'auto_published_comments' => true,
-			'comment_moderation_keys' => false,
-			'comment_notifications' => true,
-			'description' => false,
-			// 'home_page' => false,
-			// 'posts_page' => false,
-			'posts_per_page' => false,
-			'sitename' => false,
-			'theme' => false
+			'auto_published_comments',
+			'comment_moderation_keys',
+			'comment_notifications',
+			'description',
+			// 'home_page',
+			// 'posts_page',
+			'posts_per_page',
+			'sitename',
+			'theme'
 		);
 
-		foreach ($settings as $setting => $toggle) {
+		foreach ($settings as $setting) {
 			$metadata = Metadata::findOrFail($setting);
-			$metadata->value = ($toggle ? Input::has($setting) : Input::get($setting));
+			$metadata->value = Input::get($setting, false);
 			$metadata->save();
 		}
 
