@@ -37,6 +37,12 @@ Route::group(array('prefix' => 'admin'), function()
         'as'   => 'admin.categories.delete'
     ));
 
+    Route::resource('pages', 'Anchor\\Core\\Controllers\\PagesController');
+    Route::get('pages/{page}/delete', array(
+        'uses' => 'Anchor\\Core\\Controllers\\PagesController@destroy',
+        'as'   => 'admin.pages.delete'
+    ));
+
     Route::resource('users', 'Anchor\\Core\\Controllers\\UserController');
     Route::get('users/{user}/delete', array(
         'uses' => 'Anchor\\Core\\Controllers\\UserController@destroy',
