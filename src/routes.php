@@ -37,10 +37,15 @@ Route::group(array('prefix' => 'admin'), function()
         'as'   => 'admin.categories.delete'
     ));
 
-    Route::resource('pages', 'Anchor\\Core\\Controllers\\PagesController');
+    Route::resource('pages', 'Anchor\\Core\\Controllers\\PageController');
     Route::get('pages/{page}/delete', array(
-        'uses' => 'Anchor\\Core\\Controllers\\PagesController@destroy',
+        'uses' => 'Anchor\\Core\\Controllers\\PageController@destroy',
         'as'   => 'admin.pages.delete'
+    ));
+
+    Route::get('pages/status/{status}', array(
+        'uses' => 'Anchor\\Core\\Controllers\\PageController@filterByStatus',
+        'as'   => 'admin.pages.filter.status'
     ));
 
     Route::resource('users', 'Anchor\\Core\\Controllers\\UserController');

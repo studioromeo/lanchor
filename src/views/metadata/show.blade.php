@@ -16,6 +16,14 @@
                 {{ Form::textarea('description', $meta['description']) }}
             </p>
             <p>
+                {{ Form::label('home_page') }}
+                {{ Form::select('home_page', $pages, $meta['home_page']) }}
+            </p>
+            <p>
+                {{ Form::label('posts_page') }}
+                {{ Form::select('posts_page', $pages, $meta['posts_page']) }}
+            </p>
+            <p>
                 {{ Form::label('posts_per_page') }}
                 {{ Form::input('range', 'posts_per_page', $meta['posts_per_page'], array('min' => 1, 'max' => 15)) }}
             </p>

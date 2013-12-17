@@ -8,7 +8,7 @@ use Input;
 use Redirect;
 use Anchor\Core\Models\Page;
 
-class PagesController extends Controller {
+class PageController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -18,6 +18,18 @@ class PagesController extends Controller {
 	public function index()
 	{
 		$pages = Page::orderBy('updated_at', 'desc')->get();
+		return View::make('core::pages.index', compact('pages'));
+	}
+
+	/**
+	 * //
+	 *
+	 * @return Response
+	 */
+	public function filterByStatus($status)
+	{
+		$pages = Page::whereStatus($status)->get();
+
 		return View::make('core::pages.index', compact('pages'));
 	}
 

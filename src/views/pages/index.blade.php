@@ -10,22 +10,22 @@
     <section class="wrap">
         <nav class="sidebar statuses">
 
-            <a href="{{ route('admin.pages.index')}}"{{ (!Request::is('admin/pages*')) ?: ' class="active"' }}>
+            <a href="{{ route('admin.pages.index')}}"{{ (!Request::is('admin/pages')) ?: ' class="active"' }}>
                 <span class="icon"></span>
                 All
             </a>
 
-            <a href="{{ route('admin.pages.index')}}">
+            <a href="{{ route('admin.pages.filter.status', array('published'))}}"{{ (!Request::is('admin/pages/status/published*')) ?: ' class="active"' }}>
                 <span class="icon"></span>
                 Published
             </a>
 
-            <a href="{{ route('admin.pages.index')}}">
+            <a href="{{ route('admin.pages.filter.status', array('draft'))}}"{{ (!Request::is('admin/pages/status/draft*')) ?: ' class="active"' }}>
                 <span class="icon"></span>
                 Draft
             </a>
 
-            <a href="{{ route('admin.pages.index')}}">
+            <a href="{{ route('admin.pages.filter.status', array('archived'))}}"{{ (!Request::is('admin/pages/status/archived*')) ?: ' class="active"' }}>
                 <span class="icon"></span>
                 Archived
             </a>

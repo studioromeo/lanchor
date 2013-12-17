@@ -8,6 +8,7 @@ use Input;
 use Redirect;
 use Config;
 use Anchor\Core\Models\Metadata;
+use Anchor\Core\Models\Page;
 use Anchor\Core\Services\Themes;
 
 class MetadataController extends Controller {
@@ -61,8 +62,9 @@ class MetadataController extends Controller {
 		}
 
 		$meta = Metadata::where('key', 'NOT LIKE', 'custom_%')->lists('value', 'key');
+		$pages = Page::lists('name', 'id');
 
-		return View::make('core::metadata/show', compact('meta', 'themes'));
+		return View::make('core::metadata/show', compact('meta', 'themes', 'pages'));
 	}
 
 	/**
@@ -78,8 +80,8 @@ class MetadataController extends Controller {
 			'comment_moderation_keys',
 			'comment_notifications',
 			'description',
-			// 'home_page',
-			// 'posts_page',
+			'home_page',
+			'posts_page',
 			'posts_per_page',
 			'sitename',
 			'theme'
