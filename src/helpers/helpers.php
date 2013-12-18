@@ -13,18 +13,22 @@ function base_url($url = '')
     return url($url);
 }
 
-// @todo
+/**
+ * @todo Implement this
+ */
 function theme_url($file = '')
 {
     return asset('themes/default/' . ltrim($file, '/'));
 }
 
+/**
+ * @todo Implement this
+ */
 function theme_include($file)
 {
-    echo View::make('default/' . $file);
+    echo View::make('default/' . $file)->render();
 }
 
-// @todo
 function asset_url($extra = '')
 {
     return asset('packages/anchor/core/' . ltrim($extra, '/'));
@@ -35,21 +39,32 @@ function current_url()
     return URL::current();
 }
 
+/**
+ * @todo Implement this
+ */
 function rss_url()
 {
     return base_url('feeds/rss');
 }
 
 //  Custom function helpers
-// @todo
+/**
+ * @todo Implement this
+ */
 function bind($page, $fn) {
     // Events::bind($page, $fn);
 }
 
+/**
+ * @todo Implement this
+ */
 function receive($name = '') {
     // return Events::call($name);
 }
 
+/**
+ * @todo Implement this
+ */
 function body_class() {
     $classes = array();
 
@@ -71,22 +86,32 @@ function body_class() {
 }
 
 // page type helpers
-// @todo
+/**
+ * @todo Implement this
+ */
 function is_homepage() {
     return true;
     // return Registry::prop('page', 'id') == Config::meta('home_page');
 }
 
-// @todo
+/**
+ * @todo Implement this
+ */
 function is_postspage() {
     return true;
     // return Registry::prop('page', 'id') == Config::meta('posts_page');
 }
 
+/**
+ * @todo Implement this
+ */
 function is_article() {
     // return Registry::get('article') !== null;
 }
 
+/**
+ * @todo Implement this
+ */
 function is_page() {
     // return Registry::get('page') !== null;
 }

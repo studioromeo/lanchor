@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Config;
 
 class CoreServiceProvider extends ServiceProvider {
 
@@ -25,6 +26,23 @@ class CoreServiceProvider extends ServiceProvider {
 
 		// Include the routes file for anchor
 		include __DIR__.'/../../routes.php';
+
+		// Include the theme functions
+		foreach (Config::get('view.paths') as $path) {
+
+			$path .= DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR . 'functions.php';
+
+			if (is_readable($path)) {
+				include $path;
+			}
+		}
+
+		// Load the site config into the config object
+		$meta = \Anchor\Core\Models\Metadata::lists('value', 'key');
+		Config::set('meta', $meta);
+
+		$pages = \Anchor\Core\Models\Page::where('show_in_menu', true)->get();
+		\Registry::set('menu', $pages->getIterator());
 	}
 
 	/**

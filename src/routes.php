@@ -13,17 +13,34 @@
 
 Route::get('/', array('as' => 'posts.index', function() {
     $posts = Anchor\Core\Models\Post::all();
-    Registry::put('posts', $posts->getIterator(), 0);
+    Registry::set('posts', $posts->getIterator());
+    Registry::set('total_posts', $posts->count());
 
     return View::make('default/posts', compact('posts'));
 }));
 
-Route::get('/{category}', array('as' => 'category.index', function($slug) {
+Route::get('posts/{slug}', array('as' => 'posts.show', function($slug) {
+    $post = Anchor\Core\Models\Post::whereSlug($slug)->first();
+    Registry::set('article', $post);
+    // Registry::set('category', Category::find($post->category));
+
+    return View::make('default/article', compact('posts'));
+}));
+
+Route::get('/category/{slug}', array('as' => 'category.index', function($slug) {
     $posts = Anchor\Core\Models\Category::whereSlug($slug)->first()->posts()->where('status', 'published')->get();
-    Registry::put('posts', $posts->getIterator(), 0);
+    Registry::set('posts', $posts->getIterator());
+    Registry::set('total_posts', $posts->count());
 
     return View::make('default/posts', compact('posts'));
 }));
+
+Route::get('{uri}', function($uri) {
+    $page = Anchor\Core\Models\Page::whereSlug(basename($uri))->first();
+    Registry::set('page', $page);
+
+    return View::make('default/page', compact('page'));
+});
 
 Route::group(array('prefix' => 'admin'), function()
 {

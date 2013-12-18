@@ -34,10 +34,17 @@
             "Anchor\\Core\\": "src/"
         },
         "files": [
-            "src/helpers/theme.php",
+            "src/helpers/articles.php",
             "src/helpers/categories.php",
+            "src/helpers/comments.php",
+            "src/helpers/config.php",
             "src/helpers/helpers.php",
-            "src/helpers/menus.php"
+            "src/helpers/menus.php",
+            "src/helpers/metadata.php",
+            "src/helpers/pages.php",
+            "src/helpers/posts.php",
+            "src/helpers/search.php",
+            "src/helpers/users.php"
         ]
     }
 }

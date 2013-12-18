@@ -50,7 +50,7 @@ function category_description() {
 }
 
 function category_url() {
-    return URL::route('category.index', array('category' => category_slug()));
+    return URL::route('category.index', array('slug' => category_slug()));
 }
 
 function category_count() {

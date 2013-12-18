@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @todo Implement this
+ */
+
 /*
     Theme functions for menus
 */
@@ -8,10 +12,8 @@ function has_menu_items() {
     // return Registry::get('total_menu_items');
 }
 
-// @todo
 
 function menu_items() {
-    return array();
     $pages = Registry::get('menu');
 
     if($result = $pages->valid()) {
@@ -33,13 +35,20 @@ function menu_id() {
     return Registry::prop('menu_item', 'id');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function menu_url() {
     if($page = Registry::get('menu_item')) {
-        return $page->uri();
+        return URL::to($page->slug);
     }
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function menu_relative_url() {
+    return '';
     if($page = Registry::get('menu_item')) {
         return $page->relative_uri();
     }
@@ -53,7 +62,11 @@ function menu_title() {
     return Registry::prop('menu_item', 'title');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function menu_active() {
+    return '';
     if($page = Registry::get('menu_item')) {
         return $page->active();
     }
