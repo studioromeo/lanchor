@@ -39,9 +39,17 @@ function menu_id() {
  * @todo IMPLEMENT THIS
  */
 function menu_url() {
-    if($page = Registry::get('menu_item')) {
-        return URL::to($page->slug);
-    }
+
+        $segments = (array) Registry::prop('menu_item', 'slug');
+        $parent = Registry::prop('menu_item', 'parent');
+
+        while($parent) {
+            $page = Anchor\Core\Models\Page::findOrFail($parent);
+            $segments[] = $page->slug;
+            $parent = $page->parent;
+        }
+
+        return URL::to(implode('/', array_reverse($segments)));
 }
 
 /**

@@ -20,7 +20,7 @@ Route::get('/', array('as' => 'posts.index', function() {
 }));
 
 Route::get('posts/{slug}', array('as' => 'posts.show', function($slug) {
-    $post = Anchor\Core\Models\Post::whereSlug($slug)->first();
+    $post = Anchor\Core\Models\Post::whereSlug($slug)->firstOrFail();
     Registry::set('article', $post);
     // Registry::set('category', Category::find($post->category));
 
@@ -34,13 +34,6 @@ Route::get('/category/{slug}', array('as' => 'category.index', function($slug) {
 
     return View::make('default/posts', compact('posts'));
 }));
-
-Route::get('{uri}', function($uri) {
-    $page = Anchor\Core\Models\Page::whereSlug(basename($uri))->first();
-    Registry::set('page', $page);
-
-    return View::make('default/page', compact('page'));
-});
 
 Route::group(array('prefix' => 'admin'), function()
 {
@@ -98,3 +91,14 @@ Route::group(array('prefix' => 'admin'), function()
         'as'   => 'admin.extend.metadata.save'
     ));
 });
+
+
+/**
+ * IMPORTANT: This is the catch all route, it must be placed last
+ */
+Route::get('{uri}', function($uri) {
+    $page = Anchor\Core\Models\Page::whereSlug(basename($uri))->first();
+    Registry::set('page', $page);
+
+    return View::make('default/page', compact('page'));
+})->where('uri', '.*');
