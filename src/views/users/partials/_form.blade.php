@@ -24,7 +24,7 @@
     </p>
     <p>
         {{ Form::label('password') }}
-        {{ Form::text('password') }}
+        {{ Form::password('password') }}
     </p>
     <p>
         {{ Form::label('email') }}

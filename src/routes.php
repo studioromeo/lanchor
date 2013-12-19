@@ -12,7 +12,7 @@
 */
 
 Route::get('/', array('as' => 'posts.index', function() {
-    $posts = Anchor\Core\Models\Post::all();
+    $posts = Anchor\Core\Models\Post::where('status', 'published')->get();
     Registry::set('posts', $posts->getIterator());
     Registry::set('total_posts', $posts->count());
 
@@ -37,6 +37,11 @@ Route::get('/category/{slug}', array('as' => 'category.index', function($slug) {
 
 Route::group(array('prefix' => 'admin'), function()
 {
+    Route::get('/', function() {
+        return Redirect::route('admin.posts.index');
+    });
+
+
     Route::resource('posts', 'Anchor\\Core\\Controllers\\PostController');
     Route::get('posts/{post}/delete', array(
         'uses' => 'Anchor\\Core\\Controllers\\PostController@destroy',
