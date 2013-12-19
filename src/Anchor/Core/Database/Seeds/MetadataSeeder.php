@@ -35,7 +35,7 @@ class MetadataSeeder extends Seeder {
             Metadata::create(compact('key', 'value'));
         }
 
-        foreach(range(1, 5) as $index) {
+        foreach(range(1, 10) as $index) {
             Metadata::create(array(
                 'key' => 'custom_' . $faker->word(),
                 'value' => $faker->sentence(1)

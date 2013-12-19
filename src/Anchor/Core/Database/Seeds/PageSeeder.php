@@ -29,7 +29,7 @@ class PageSeeder extends Seeder {
                 'slug'         => $this->generateSlug($title),
                 'name'         => $title,
                 'title'        => $title,
-                'content'      => $faker->paragraph(5),
+                'content'      => implode("\r\n\r\n", $faker->paragraphs(5)),
                 'status'       => rand(1,3),
                 'redirect'     => '',
                 'show_in_menu' => rand(0,1),

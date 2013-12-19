@@ -29,7 +29,7 @@ class PostSeeder extends Seeder {
                 'title' => $title,
                 'slug'  => $this->generateSlug($title),
                 'description' => $faker->paragraph(2),
-                'html' => $faker->paragraph(5), // @todo a bit more markdown!
+                'html' => implode("\r\n\r\n", $faker->paragraphs(5)), // @todo a bit more markdown!
                 'author' => 1,
                 'category' => array_rand($categories),
                 'status' => rand(1,3),
