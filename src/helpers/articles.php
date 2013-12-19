@@ -47,11 +47,8 @@ function article_description() {
     return Registry::prop('article', 'description');
 }
 
-/**
- * @todo Implement this
- */
 function parse($string) {
-    return $string;
+    return \Michelf\Markdown::defaultTransform($string);
 }
 
 function article_html() {
