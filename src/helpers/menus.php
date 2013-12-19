@@ -8,8 +8,8 @@
     Theme functions for menus
 */
 function has_menu_items() {
-    return true;
-    // return Registry::get('total_menu_items');
+    $pages = Registry::get('menu');
+    return $pages->count();
 }
 
 

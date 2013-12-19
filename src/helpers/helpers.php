@@ -69,7 +69,7 @@ function body_class() {
     $classes = array();
 
     //  Get the URL slug
-    $parts = explode('/', Request::path());
+    $parts = Request::segments();
     $classes[] = count($parts) ? trim(current($parts)) : 'index';
 
     //  Is it a posts page?
@@ -87,31 +87,25 @@ function body_class() {
 
 // page type helpers
 /**
- * @todo Implement this
+ * @todo IMPLEMENT THIS
  */
 function is_homepage() {
     return true;
-    // return Registry::prop('page', 'id') == Config::meta('home_page');
+    return Registry::prop('page', 'id') == Config::get('meta.home_page');
 }
 
 /**
- * @todo Implement this
+ * @todo IMPLEMENT THIS
  */
 function is_postspage() {
     return true;
-    // return Registry::prop('page', 'id') == Config::meta('posts_page');
+    return Registry::prop('page', 'id') == Config::get('meta.posts_page');
 }
 
-/**
- * @todo Implement this
- */
 function is_article() {
-    // return Registry::get('article') !== null;
+    return Registry::get('article') !== null;
 }
 
-/**
- * @todo Implement this
- */
 function is_page() {
-    // return Registry::get('page') !== null;
+    return Registry::get('page') !== null;
 }

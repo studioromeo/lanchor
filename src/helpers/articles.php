@@ -1,16 +1,25 @@
 <?php
 
-/*
-    Theme functions for articles
-*/
+/**
+ * Get the article ID
+ * @return integer
+ */
 function article_id() {
     return Registry::prop('article', 'id');
 }
 
+/**
+ * Get the article title
+ * @return string
+ */
 function article_title() {
     return Registry::prop('article', 'title');
 }
 
+/**
+ * Get the article slug
+ * @return string
+ */
 function article_slug() {
     return Registry::prop('article', 'slug');
 }
@@ -39,18 +48,35 @@ function article_slug() {
 //     }
 // }
 
+/**
+ * Get the url for article detail
+ * @return string
+ */
 function article_url() {
     return URL::route('posts.show', array('slug' => article_slug()));
 }
 
+/**
+ * Get the article description
+ * @return string
+ */
 function article_description() {
     return Registry::prop('article', 'description');
 }
 
+/**
+ * Parses a markdown string and output HTML
+ * @param  string $string
+ * @return string
+ */
 function parse($string) {
     return \Michelf\Markdown::defaultTransform($string);
 }
 
+/**
+ * Gets the article content in HTML format
+ * @return string
+ */
 function article_html() {
     return parse(Registry::prop('article', 'html'), false);
 }
@@ -59,66 +85,100 @@ function article_markdown() {
     return parse(Registry::prop('article', 'html'));
 }
 
+/**
+ * Get the article's custom css
+ * @return string
+ */
 function article_css() {
     return Registry::prop('article', 'css');
 }
 
+/**
+ * Get the article's custom javascript
+ * @return string
+ */
 function article_js() {
     return Registry::prop('article', 'js');
 }
 
+/**
+ * Get the article UNIX timestamp
+ * @return integer
+ */
 function article_time() {
     if($created = Registry::prop('article', 'created_at')) {
         return $created->getTimestamp();
     }
 }
 
+/**
+ * Get the article created date
+ * @return string 1st January, 2013
+ */
 function article_date() {
     if($created = Registry::prop('article', 'created')) {
         return $created->format('jS F, Y');
     }
 }
 
+/**
+ * Get the article status
+ * @return string
+ */
 function article_status() {
     return Registry::prop('article', 'status');
 }
 
-// function article_category() {
-//     if($category = Registry::prop('article', 'category')) {
-//         $categories = Registry::get('all_categories');
+/**
+ * Get the article's category title
+ * @return string
+ */
+function article_category() {
+    $category = Registry::get('category');
+    return $category->title;
+}
 
-//         return $categories[$category]->title;
-//     }
-// }
+/**
+ * Get the article's category slug
+ * @return string
+ */
+function article_category_slug() {
+    $category = Registry::get('category');
+    return $category->slug;
+}
 
-// function article_category_slug() {
-//     if($category = Registry::prop('article', 'category')) {
-//         $categories = Registry::get('all_categories');
+/**
+ * @todo IMPLEMENT THIS
+ */
+function article_category_url() {
+    $category = Registry::get('category');
+    return '';
+}
 
-//         return $categories[$category]->slug;
-//     }
-// }
-
-// function article_category_url() {
-//     if($category = Registry::prop('article', 'category')) {
-//         $categories = Registry::get('all_categories');
-
-//         return base_url('category/' . $categories[$category]->slug);
-//     }
-// }
-
+/**
+ * @todo IMPLEMENT THIS
+ */
 function article_total_comments() {
     return Registry::prop('article', 'total_comments');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function article_author() {
     return Registry::prop('article', 'author_name');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function article_author_id() {
     return Registry::prop('article', 'author_id');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function article_author_bio() {
     return Registry::prop('article', 'author_bio');
 }
@@ -137,6 +197,10 @@ function article_custom_field($key, $default = '') {
     // return $default;
 }
 
+/**
+ * Check if the article has custom CSS or Javascript
+ * @return boolean
+ */
 function customised() {
     if($itm = Registry::get('article')) {
 

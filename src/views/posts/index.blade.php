@@ -28,5 +28,6 @@
             </li>
         @endforeach
         </ul>
+        {{ $posts->links('core::pagination/admin') }}
     </section>
 @stop

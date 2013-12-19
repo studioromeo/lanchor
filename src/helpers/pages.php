@@ -3,24 +3,45 @@
 /**
  *  Theme functions for pages
  */
+
+/**
+ * Get the page ID
+ * @return integer
+ */
 function page_id() {
     return Registry::prop('page', 'id');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function page_url() {
     if($page = Registry::get('page')) {
         return $page->uri();
     }
 }
 
+/**
+ * Get the page slug
+ * @return string
+ */
 function page_slug() {
     return Registry::prop('page', 'slug');
 }
 
+/**
+ * Get the page name
+ * @return string
+ */
 function page_name() {
     return Registry::prop('page', 'name');
 }
 
+/**
+ * Get the page title
+ * @param  string $default
+ * @return string
+ */
 function page_title($default = '') {
     if($title = Registry::prop('article', 'title')) {
         return $title;
@@ -33,14 +54,25 @@ function page_title($default = '') {
     return $default;
 }
 
+/**
+ * Get and parse the page's content
+ * @return string
+ */
 function page_content() {
     return parse(Registry::prop('page', 'content'));
 }
 
+/**
+ * Get the page status
+ * @return string
+ */
 function page_status() {
     return Registry::prop('page', 'status');
 }
 
+/**
+ * @todo IMPLEMENT THIS
+ */
 function page_custom_field($key, $default = '') {
     $id = Registry::prop('page', 'id');
 

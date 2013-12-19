@@ -44,5 +44,7 @@
             </li>
         @endforeach
         </ul>
+
+        {{ $pages->links('core::pagination/admin') }}
     </section>
 @stop

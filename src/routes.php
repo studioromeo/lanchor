@@ -12,9 +12,10 @@
 */
 
 Route::get('/', array('as' => 'posts.index', function() {
-    $posts = Anchor\Core\Models\Post::where('status', 'published')->get();
+    $posts = Anchor\Core\Models\Post::where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
+    Registry::set('paginator', $posts);
     Registry::set('posts', $posts->getIterator());
-    Registry::set('total_posts', $posts->count());
+    Registry::set('total_posts', $posts->getTotal());
 
     return View::make('default/posts', compact('posts'));
 }));
@@ -22,15 +23,16 @@ Route::get('/', array('as' => 'posts.index', function() {
 Route::get('posts/{slug}', array('as' => 'posts.show', function($slug) {
     $post = Anchor\Core\Models\Post::whereSlug($slug)->firstOrFail();
     Registry::set('article', $post);
-    // Registry::set('category', Category::find($post->category));
+    Registry::set('category', Anchor\Core\Models\Category::find($post->category));
 
     return View::make('default/article', compact('posts'));
 }));
 
 Route::get('/category/{slug}', array('as' => 'category.index', function($slug) {
-    $posts = Anchor\Core\Models\Category::whereSlug($slug)->first()->posts()->where('status', 'published')->get();
+    $posts = Anchor\Core\Models\Category::whereSlug($slug)->first()
+        ->posts()->where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
     Registry::set('posts', $posts->getIterator());
-    Registry::set('total_posts', $posts->count());
+    Registry::set('total_posts', $posts->getTotal());
 
     return View::make('default/posts', compact('posts'));
 }));
@@ -40,7 +42,6 @@ Route::group(array('prefix' => 'admin'), function()
     Route::get('/', function() {
         return Redirect::route('admin.posts.index');
     });
-
 
     Route::resource('posts', 'Anchor\\Core\\Controllers\\PostController');
     Route::get('posts/{post}/delete', array(

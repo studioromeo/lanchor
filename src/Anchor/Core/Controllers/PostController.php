@@ -3,6 +3,7 @@
 namespace Anchor\Core\Controllers;
 
 use Controller;
+use Config;
 use View;
 use Input;
 use Redirect;
@@ -19,7 +20,7 @@ class PostController extends Controller
 	 */
 	public function index()
 	{
-		$posts      = Post::orderBy('updated_at', 'desc')->get();
+		$posts      = Post::orderBy('updated_at', 'desc')->paginate(Config::get('meta.posts_per_page'));
 		$categories = Category::all();
 
 		return View::make('core::posts.index', compact('posts', 'categories'));
@@ -32,7 +33,7 @@ class PostController extends Controller
 	 */
 	public function filterByCategory($slug)
 	{
-		$posts      = Category::whereSlug($slug)->first()->posts;
+		$posts      = Category::whereSlug($slug)->first()->posts()->paginate(Config::get('meta.posts_per_page'));
 		$categories = Category::all();
 
 		return View::make('core::posts.index', compact('posts', 'categories'));

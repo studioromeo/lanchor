@@ -3,6 +3,7 @@
 namespace Anchor\Core\Controllers;
 
 use Controller;
+use Config;
 use View;
 use Input;
 use Redirect;
@@ -17,7 +18,7 @@ class PageController extends Controller {
 	 */
 	public function index()
 	{
-		$pages = Page::orderBy('updated_at', 'desc')->get();
+		$pages = Page::orderBy('updated_at', 'desc')->paginate(Config::get('meta.posts_per_page'));
 		return View::make('core::pages.index', compact('pages'));
 	}
 
@@ -28,7 +29,7 @@ class PageController extends Controller {
 	 */
 	public function filterByStatus($status)
 	{
-		$pages = Page::whereStatus($status)->get();
+		$pages = Page::whereStatus($status)->paginate(Config::get('meta.posts_per_page'));
 
 		return View::make('core::pages.index', compact('pages'));
 	}
