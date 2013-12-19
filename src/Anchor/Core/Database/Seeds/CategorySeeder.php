@@ -2,12 +2,13 @@
 
 namespace Anchor\Core\Database\Seeds;
 
+use Hash;
 use Seeder;
 use Eloquent;
-use Anchor\Core\Models\Post;
+use Anchor\Core\Models\Category;
 use Faker\Factory as Faker;
 
-class PostSeeder extends Seeder {
+class CategorySeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -19,21 +20,14 @@ class PostSeeder extends Seeder {
         Eloquent::unguard();
         $faker = Faker::create();
 
-        foreach(range(1, 20) as $index) {
+        foreach(range(1, 3) as $index) {
 
-            $title = $faker->sentence(5);
+            $title = $faker->sentence(2);
 
-            $categories = \Anchor\Core\Models\Category::lists('title', 'id');
-
-            Post::create(array(
-                'title' => $title,
-                'slug'  => $this->generateSlug($title),
-                'description' => $faker->paragraph(2),
-                'html' => $faker->paragraph(5), // @todo a bit more markdown!
-                'author' => 1,
-                'category' => array_rand($categories),
-                'status' => rand(1,3),
-                'comments' => rand(0,1)
+            Category::create(array(
+                'title'       => $title,
+                'slug'        => $this->generateSlug($title),
+                'description' => $faker->paragraph(2)
             ));
         }
     }
@@ -51,5 +45,4 @@ class PostSeeder extends Seeder {
 
         return $clean;
     }
-
 }

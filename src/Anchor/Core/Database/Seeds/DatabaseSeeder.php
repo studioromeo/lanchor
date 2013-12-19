@@ -16,8 +16,20 @@ class DatabaseSeeder extends Seeder {
     {
         Eloquent::unguard();
 
+        $this->call('Anchor\\Core\\Database\\Seeds\\CategorySeeder');
+        $this->command->info('Category table seeded!');
+
         $this->call('Anchor\\Core\\Database\\Seeds\\PostSeeder');
         $this->command->info('Post table seeded!');
+
+        $this->call('Anchor\\Core\\Database\\Seeds\\UserSeeder');
+        $this->command->info('User table seeded!');
+
+        $this->call('Anchor\\Core\\Database\\Seeds\\PageSeeder');
+        $this->command->info('Page table seeded!');
+
+        $this->call('Anchor\\Core\\Database\\Seeds\\MetadataSeeder');
+        $this->command->info('Metadata table seeded!');
     }
 
 }
