@@ -9,11 +9,11 @@
     </p>
     <p>
         {{ Form::label('status') }}
-        {{ Form::select('status', array('Inactive', 'Active')) }}
+        {{ Form::select('status', array( 'inactive' => 'Inactive', 'active' => 'Active')) }}
     </p>
     <p>
         {{ Form::label('role') }}
-        {{ Form::select('role', array('Admin', 'Editor', 'User')) }}
+        {{ Form::select('role', array('administrator' => 'Admin', 'editor' => 'Editor', 'user' => 'User')) }}
     </p>
 </fieldset>
 
