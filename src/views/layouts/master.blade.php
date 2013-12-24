@@ -19,11 +19,14 @@
                         <li {{ (!Request::is('admin/posts*')) ?: 'class="active"' }}>
                             {{ link_to_route('admin.posts.index', 'Posts') }}
                         </li>
-                        <li {{ (!Request::is('admin/categories*')) ?: 'class="active"' }}>
-                            {{ link_to_route('admin.categories.index', 'Categories') }}
+                        <li {{ (!Request::is('admin/comments*')) ?: 'class="active"' }}>
+                            {{ link_to_route('admin.comments.index', 'Comments') }}
                         </li>
                         <li {{ (!Request::is('admin/pages*')) ?: 'class="active"' }}>
                             {{ link_to_route('admin.pages.index', 'Pages') }}
+                        </li>
+                        <li {{ (!Request::is('admin/categories*')) ?: 'class="active"' }}>
+                            {{ link_to_route('admin.categories.index', 'Categories') }}
                         </li>
                         <li {{ (!Request::is('admin/users*')) ?: 'class="active"' }}>
                             {{ link_to_route('admin.users.index', 'Users') }}

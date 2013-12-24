@@ -24,9 +24,6 @@ class CoreServiceProvider extends ServiceProvider {
 
 		AliasLoader::getInstance()->alias('Registry', 'Anchor\Core\Facades\Registry');
 
-		// Include the routes file for anchor
-		include __DIR__.'/../../routes.php';
-
 		// Include the theme functions
 		foreach (Config::get('view.paths') as $path) {
 
@@ -43,6 +40,9 @@ class CoreServiceProvider extends ServiceProvider {
 
 		$pages = \Anchor\Core\Models\Page::where('show_in_menu', true)->get();
 		\Registry::set('menu', $pages->getIterator());
+
+		// Include the routes file for anchor
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**

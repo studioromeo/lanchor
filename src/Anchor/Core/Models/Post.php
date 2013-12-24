@@ -10,6 +10,11 @@ class Post extends Eloquent
 
     public function category()
     {
-        $this->belongsTo('Anchor\\Core\\Models\\Category');
+        return $this->belongsTo('Anchor\\Core\\Models\\Category', 'category');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('Anchor\\Core\\Models\\Comment', 'post');
     }
 }

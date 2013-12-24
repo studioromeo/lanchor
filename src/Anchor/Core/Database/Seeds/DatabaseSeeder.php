@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder {
 
         $this->call('Anchor\\Core\\Database\\Seeds\\MetadataSeeder');
         $this->command->info('Metadata table seeded!');
+
+        $this->call('Anchor\\Core\\Database\\Seeds\\CommentSeeder');
+        $this->command->info('Comment table seeded!');
     }
 
 }

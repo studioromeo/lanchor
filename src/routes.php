@@ -11,19 +11,33 @@
 |
 */
 
-Route::get('/', array('as' => 'posts.index', function() {
+$home_page  = Config::get('meta.home_page');
+$posts_page = Config::get('meta.posts_page');
+
+if ($home_page != $posts_page) {
+    Route::get('/', function() use ($home_page) {
+        $page = Anchor\Core\Models\Page::find($home_page);
+        Registry::set('page', $page);
+
+        return View::make('default/page', compact('page'));
+    });
+}
+
+$posts_page = Anchor\Core\Models\Page::find($posts_page);
+Route::get('/{posts_slug?}', array('as' => 'posts.index', function() {
     $posts = Anchor\Core\Models\Post::where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
     Registry::set('paginator', $posts);
     Registry::set('posts', $posts->getIterator());
     Registry::set('total_posts', $posts->getTotal());
 
     return View::make('default/posts', compact('posts'));
-}));
+}))->where(array('posts_slug' => $posts_page->slug));
 
-Route::get('posts/{slug}', array('as' => 'posts.show', function($slug) {
+Route::get($posts_page->slug.'/{slug}', array('as' => 'posts.show', function($slug) {
     $post = Anchor\Core\Models\Post::whereSlug($slug)->firstOrFail();
     Registry::set('article', $post);
     Registry::set('category', Anchor\Core\Models\Category::find($post->category));
+    Registry::set('comments', $post->comments()->orderBy('date', 'desc')->get()->getIterator());
 
     return View::make('default/article', compact('posts'));
 }));
@@ -52,6 +66,17 @@ Route::group(array('prefix' => 'admin'), function()
     Route::get('posts/category/{category}', array(
         'uses' => 'Anchor\\Core\\Controllers\\PostController@filterByCategory',
         'as'   => 'admin.posts.filter.category'
+    ));
+
+    Route::resource('comments', 'Anchor\\Core\\Controllers\\CommentController');
+    Route::get('comments/{comment}/delete', array(
+        'uses' => 'Anchor\\Core\\Controllers\\CommentController@destroy',
+        'as'   => 'admin.comments.delete'
+    ));
+
+    Route::get('comments/status/{status}', array(
+        'uses' => 'Anchor\\Core\\Controllers\\CommentController@filterByStatus',
+        'as'   => 'admin.comments.filter.status'
     ));
 
     Route::resource('categories', 'Anchor\\Core\\Controllers\\CategoryController');
