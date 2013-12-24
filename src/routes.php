@@ -11,45 +11,26 @@
 |
 */
 
-$home_page  = Config::get('meta.home_page');
-$posts_page = Config::get('meta.posts_page');
+Route::get('/', array(
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@home',
+));
 
-if ($home_page != $posts_page) {
-    Route::get('/', function() use ($home_page) {
-        $page = Anchor\Core\Models\Page::find($home_page);
-        Registry::set('page', $page);
+// @todo Don't fetch this from the database!
+$posts_page = Anchor\Core\Models\Page::find(Config::get('meta.posts_page'));
+Route::get($posts_page->slug, array(
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@postArchive',
+    'as'   => 'posts.index'
+));
 
-        return View::make('default/page', compact('page'));
-    });
-}
+Route::get($posts_page->slug.'/{slug}', array(
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@article',
+    'as' => 'posts.show',
+));
 
-$posts_page = Anchor\Core\Models\Page::find($posts_page);
-Route::get('/{posts_slug?}', array('as' => 'posts.index', function() {
-    $posts = Anchor\Core\Models\Post::where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
-    Registry::set('paginator', $posts);
-    Registry::set('posts', $posts->getIterator());
-    Registry::set('total_posts', $posts->getTotal());
-
-    return View::make('default/posts', compact('posts'));
-}))->where(array('posts_slug' => $posts_page->slug));
-
-Route::get($posts_page->slug.'/{slug}', array('as' => 'posts.show', function($slug) {
-    $post = Anchor\Core\Models\Post::whereSlug($slug)->firstOrFail();
-    Registry::set('article', $post);
-    Registry::set('category', Anchor\Core\Models\Category::find($post->category));
-    Registry::set('comments', $post->comments()->orderBy('date', 'desc')->get()->getIterator());
-
-    return View::make('default/article', compact('posts'));
-}));
-
-Route::get('/category/{slug}', array('as' => 'category.index', function($slug) {
-    $posts = Anchor\Core\Models\Category::whereSlug($slug)->first()
-        ->posts()->where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
-    Registry::set('posts', $posts->getIterator());
-    Registry::set('total_posts', $posts->getTotal());
-
-    return View::make('default/posts', compact('posts'));
-}));
+Route::get('/category/{slug}', array(
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@categoryArchive',
+    'as' => 'category.index'
+));
 
 Route::group(array('prefix' => 'admin'), function()
 {
@@ -123,13 +104,9 @@ Route::group(array('prefix' => 'admin'), function()
     ));
 });
 
-
 /**
  * IMPORTANT: This is the catch all route, it must be placed last
  */
-Route::get('{uri}', function($uri) {
-    $page = Anchor\Core\Models\Page::whereSlug(basename($uri))->first();
-    Registry::set('page', $page);
-
-    return View::make('default/page', compact('page'));
-})->where('uri', '.*');
+Route::get('{slug}', array(
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@page'
+))->where('slug', '.*');
