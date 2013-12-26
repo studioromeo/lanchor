@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder {
 
         $this->call('Anchor\\Core\\Database\\Seeds\\CommentSeeder');
         $this->command->info('Comment table seeded!');
+
+        $this->call('Anchor\\Core\\Database\\Seeds\\ExtendSeeder');
+        $this->command->info('Extend table seeded!');
     }
 
 }

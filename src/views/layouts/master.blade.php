@@ -44,5 +44,17 @@
             <small>Powered by Anchor</small>
             <em>Make blogging beautiful.</em>
         </footer>
+
+        <script src="{{ asset('packages/anchor/core/js/zepto.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/custom-fields.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/dragdrop.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/editor.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/focus-mode.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/page-name.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/redirect.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/slug.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/sortable.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/text-resize.js') }}"></script>
+        <script src="{{ asset('packages/anchor/core/js/upload-fields.js') }}"></script>
     </body>
 </html>

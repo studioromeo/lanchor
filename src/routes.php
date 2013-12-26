@@ -102,6 +102,12 @@ Route::group(array('prefix' => 'admin'), function()
         'uses' => 'Anchor\\Core\\Controllers\\MetadataController@saveSettings',
         'as'   => 'admin.extend.metadata.save'
     ));
+
+    Route::resource('extend/fields', 'Anchor\\Core\\Controllers\\ExtendController');
+    Route::get('extend/fields/{key}/delete', array(
+        'uses' => 'Anchor\\Core\\Controllers\\ExtendController@destroy',
+        'as'   => 'admin.extend.fields.delete'
+    ));
 });
 
 /**

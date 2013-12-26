@@ -7,7 +7,7 @@
     <section class="wrap">
         <ul class="list">
             <li>
-                <a href="#">
+                <a href="{{ route('admin.extend.fields.index') }}">
                     <strong>Custom Fields</strong>
                     <span>Create additional fields</span>
                 </a>
