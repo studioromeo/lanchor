@@ -21,7 +21,7 @@ class MetadataController extends Controller {
 	public function index()
 	{
 		$metadata = Metadata::where('key', 'LIKE', 'custom_%')->get();
-		return View::make('core::metadata/index', compact('metadata'));
+		return View::make('core::extend/metadata/index', compact('metadata'));
 	}
 
 	/**
@@ -31,7 +31,7 @@ class MetadataController extends Controller {
 	 */
 	public function create()
 	{
-		return View::make('core::metadata/create');
+		return View::make('core::extend/metadata/create');
 	}
 
 	/**
@@ -64,7 +64,7 @@ class MetadataController extends Controller {
 		$meta = Metadata::where('key', 'NOT LIKE', 'custom_%')->lists('value', 'key');
 		$pages = Page::lists('name', 'id');
 
-		return View::make('core::metadata/show', compact('meta', 'themes', 'pages'));
+		return View::make('core::extend/metadata/show', compact('meta', 'themes', 'pages'));
 	}
 
 	/**
@@ -105,7 +105,7 @@ class MetadataController extends Controller {
 	public function edit($id)
 	{
 		$meta = Metadata::find($id);
-		return View::make('core::metadata/edit', compact('meta'));
+		return View::make('core::extend/metadata/edit', compact('meta'));
 	}
 
 	/**
