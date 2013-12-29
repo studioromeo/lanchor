@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Config;
+use View;
 
 class CoreServiceProvider extends ServiceProvider {
 
@@ -24,15 +25,11 @@ class CoreServiceProvider extends ServiceProvider {
 
 		AliasLoader::getInstance()->alias('Registry', 'Anchor\Core\Facades\Registry');
 
+		$path = public_path() . '/themes/default/';
+		View::addNameSpace('theme',$path);
+
 		// Include the theme functions
-		foreach (Config::get('view.paths') as $path) {
-
-			$path .= DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR . 'functions.php';
-
-			if (is_readable($path)) {
-				include $path;
-			}
-		}
+		include $path . 'functions.php';
 
 		// Load the site config into the config object
 		$meta = \Anchor\Core\Models\Metadata::lists('value', 'key');

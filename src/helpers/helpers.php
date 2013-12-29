@@ -26,7 +26,7 @@ function theme_url($file = '')
  */
 function theme_include($file)
 {
-    echo View::make('default/' . $file)->render();
+    echo View::make('theme::' . $file)->render();
 }
 
 function asset_url($extra = '')

@@ -28,11 +28,13 @@ class PublicController extends Controller {
     public function postArchive()
     {
         $posts = Post::where('status', 'published')->paginate(Config::get('meta.posts_per_page'));
+        $page  = Page::find(Config::get('meta.posts_page'));
         Registry::set('paginator', $posts);
         Registry::set('posts', $posts->getIterator());
+        Registry::set('page', $page);
         Registry::set('total_posts', $posts->getTotal());
 
-        return View::make('default/posts', compact('posts'));
+        return View::make('theme::posts', compact('posts'));
     }
 
     public function article($slug)
@@ -42,7 +44,7 @@ class PublicController extends Controller {
         Registry::set('category', Category::find($post->category));
         Registry::set('comments', $post->comments()->orderBy('date', 'desc')->get()->getIterator());
 
-        return View::make('default/article', compact('posts'));
+        return View::make('theme::article', compact('posts'));
     }
 
     public function categoryArchive($slug)
@@ -55,7 +57,7 @@ class PublicController extends Controller {
         Registry::set('posts', $posts->getIterator());
         Registry::set('total_posts', $posts->getTotal());
 
-        return View::make('default/posts', compact('posts'));
+        return View::make('theme::posts', compact('posts'));
     }
 
     public function page($slug)
@@ -68,6 +70,6 @@ class PublicController extends Controller {
 
         Registry::set('page', $page);
 
-        return View::make('default/page', compact('page'));
+        return View::make('theme::page', compact('page'));
     }
 }
