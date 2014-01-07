@@ -2,14 +2,20 @@
 
 @section('content')
     <hgroup class="wrap">
-        <h1>Posts</h1>
+        <h1>@lang('core::posts.posts')</h1>
         <nav>
-            {{ link_to_route('admin.posts.create', 'Create a new post', null, array('class' => 'btn')) }}
+            {{ link_to_route('admin.posts.create', Lang::get('core::posts.create_post'), null, array('class' => 'btn')) }}
         </nav>
     </hgroup>
     <section class="wrap">
+        @if(Session::has('message'))
+            <div class="notifications">
+                <p class="success">@lang(Session::get('message'))</p>
+            </div>
+        @endif
+
         <nav class="sidebar">
-            {{ link_to_route('admin.posts.index', 'All Categories', null, array('class' => Request::is('admin/posts') ? 'active' : '')) }}
+            {{ link_to_route('admin.posts.index', Lang::get('core::posts.all.cats'), null, array('class' => Request::is('admin/posts') ? 'active' : '')) }}
             @foreach($categories as $category)
                 {{ link_to_route('admin.posts.filter.category', $category->title, $category->slug, array('class' => Request::is('admin/posts/category/' . $category->slug) ? 'active' : '')) }}
             @endforeach

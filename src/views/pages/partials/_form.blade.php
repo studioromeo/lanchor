@@ -11,7 +11,7 @@
     </div>
 </fieldset>
 
-<fieldset class="redirect show">
+<fieldset class="redirect">
     <div class="wrap">
         {{ Form::text('redirect', null, array('placeholder' => 'Redirect Url')) }}
     </div>

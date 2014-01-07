@@ -63,7 +63,8 @@ class PostController extends Controller
 		$post->comments = (bool) Input::get('comments');
 		$post->save();
 
-		return Redirect::route('admin.posts.index');
+		return Redirect::route('admin.posts.index')
+			->with('message', 'core::posts.created');
 	}
 
 	/**
@@ -105,7 +106,8 @@ class PostController extends Controller
 		$post->comments = (bool) Input::get('comments');
 		$post->save();
 
-		return Redirect::route('admin.posts.index');
+		return Redirect::route('admin.posts.edit', array($id))
+			->with('message', 'core::posts.updated');
 	}
 
 	/**
@@ -118,6 +120,7 @@ class PostController extends Controller
 	{
 		// Remove the post!
 		Post::destroy($id);
-		return Redirect::route('admin.posts.index');
+		return Redirect::route('admin.posts.index')
+			->with('message', 'core::posts.deleted');
 	}
 }

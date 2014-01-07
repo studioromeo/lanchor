@@ -114,5 +114,6 @@ Route::group(array('prefix' => 'admin'), function()
  * IMPORTANT: This is the catch all route, it must be placed last
  */
 Route::get('{slug}', array(
-    'uses' => 'Anchor\\Core\\Controllers\\PublicController@page'
+    'uses' => 'Anchor\\Core\\Controllers\\PublicController@page',
+    'as'   => 'page.show'
 ))->where('slug', '.*');

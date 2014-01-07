@@ -2,6 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8" />
+
+        <title>Manage <?php echo Config::get('meta.sitename'); ?></title>
+
         <link rel="stylesheet" href="{{ asset('packages/anchor/core/css/reset.css') }}" />
         <link rel="stylesheet" href="{{ asset('packages/anchor/core/css/admin.css') }}" />
         <link rel="stylesheet" href="{{ asset('packages/anchor/core/css/login.css') }}" />
@@ -49,7 +52,7 @@
         <script src="{{ asset('packages/anchor/core/js/custom-fields.js') }}"></script>
         <script src="{{ asset('packages/anchor/core/js/dragdrop.js') }}"></script>
         <script src="{{ asset('packages/anchor/core/js/editor.js') }}"></script>
-        <script src="{{ asset('packages/anchor/core/js/focus-mode.js') }}"></script>
+        <!-- <script src="{{ asset('packages/anchor/core/js/focus-mode.js') }}"></script> -->
         <script src="{{ asset('packages/anchor/core/js/page-name.js') }}"></script>
         <script src="{{ asset('packages/anchor/core/js/redirect.js') }}"></script>
         <script src="{{ asset('packages/anchor/core/js/slug.js') }}"></script>
