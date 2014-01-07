@@ -12,12 +12,9 @@ function page_id() {
     return Registry::prop('page', 'id');
 }
 
-/**
- * @todo IMPLEMENT THIS
- */
 function page_url() {
     if($page = Registry::get('page')) {
-        return $page->uri();
+        return route('page.show', array('slug' => $page->slug));
     }
 }
 

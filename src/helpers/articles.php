@@ -147,12 +147,9 @@ function article_category_slug() {
     return $category->slug;
 }
 
-/**
- * @todo IMPLEMENT THIS
- */
 function article_category_url() {
     $category = Registry::get('category');
-    return '';
+    return route('category.index', array('slug' => $category->slug));
 }
 
 /**
@@ -162,23 +159,14 @@ function article_total_comments() {
     return Registry::prop('article', 'total_comments');
 }
 
-/**
- * @todo IMPLEMENT THIS
- */
 function article_author() {
     return Registry::prop('article', 'author_name');
 }
 
-/**
- * @todo IMPLEMENT THIS
- */
 function article_author_id() {
     return Registry::prop('article', 'author_id');
 }
 
-/**
- * @todo IMPLEMENT THIS
- */
 function article_author_bio() {
     return Registry::prop('article', 'author_bio');
 }
