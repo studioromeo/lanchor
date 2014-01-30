@@ -57,6 +57,18 @@ class PostController extends Controller
 	 */
 	public function store()
 	{
+		$rules = array(
+			'title' => 'required',
+			'slug'  => 'required|alpha_dash|unique:posts'
+		);
+
+		$validator = \Validator::make(Input::all(), $rules, \Lang::get('core::posts'));
+
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
+		// This should be Post::create($input) really let the model handle data!
 		$post = new Post;
 		$post->fill(Input::all());
 		$post->author = 1;
@@ -100,6 +112,17 @@ class PostController extends Controller
 	 */
 	public function update($id)
 	{
+		$rules = array(
+			'title' => 'required',
+			'slug'  => "required|alpha_dash|unique:posts,slug,{$id}"
+		);
+
+		$validator = \Validator::make(Input::all(), $rules, \Lang::get('core::posts'));
+
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator)->withInput();
+		}
+
 		$post = Post::find($id);
 
 		$post->fill(Input::all());

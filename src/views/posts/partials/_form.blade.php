@@ -1,10 +1,20 @@
 <fieldset class="header">
     <div class="wrap">
+
         @if (Session::has('message'))
             <div class="notifications">
                 <p class="success">@lang(Session::get('message'))</p>
             </div>
         @endif
+
+        @unless(empty($errors))
+            <div class="notifications">
+                @foreach($errors->all() as $error)
+                    <p class="error">{{ $error }}</p>
+                @endforeach
+            </div>
+        @endunless
+
         {{ Form::text('title', null, array('placeholder' => Lang::get('core::posts.title'), 'autocomplete'=> 'off', 'autofocus' => 'true')) }}
         <aside class="buttons">
             {{ Form::button(Lang::get('core::global.save'), array('class' => 'btn', 'type' => 'submit')) }}
