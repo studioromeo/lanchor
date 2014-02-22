@@ -49,7 +49,7 @@ class ExtendSeeder extends Seeder {
                 'field'      => $field,
                 'key'        => $faker->word,
                 'label'      => $faker->word,
-                'attributes' => $attr
+                'attributes' => (array) $attr
             ));
         }
     }
