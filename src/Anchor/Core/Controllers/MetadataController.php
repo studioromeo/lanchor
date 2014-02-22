@@ -57,9 +57,7 @@ class MetadataController extends Controller {
 	 */
 	public function show()
 	{
-		foreach (Config::get('view.paths') as $path) {
-			$themes = Themes::lists($path);
-		}
+		$themes = Themes::lists(public_path() . '/themes/');
 
 		$meta = Metadata::where('key', 'NOT LIKE', 'custom_%')->lists('value', 'key');
 		$pages = Page::lists('name', 'id');
