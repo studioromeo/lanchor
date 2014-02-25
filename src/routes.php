@@ -108,6 +108,10 @@ Route::group(array('prefix' => 'admin'), function()
         'uses' => 'Anchor\\Core\\Controllers\\ExtendController@destroy',
         'as'   => 'admin.extend.fields.delete'
     ));
+
+    Route::get('{slug}', function() {
+        App::abort(404);
+    })->where('slug', '(.*)?');
 });
 
 /**

@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "fzaninotto/faker": "~1.0"
+        "fzaninotto/faker": "~1.0",
+        "Orchestra/Testbench": "~2.1.1"
     },
     "autoload": {
         "classmap": [

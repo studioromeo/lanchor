@@ -35,11 +35,27 @@ class MetadataSeeder extends Seeder {
             Metadata::create(compact('key', 'value'));
         }
 
+
         foreach(range(1, 10) as $index) {
+            $this->seedCustomData();
+        }
+
+    }
+
+    public function seedCustomData($attempt = 1)
+    {
+        $faker = Faker::create();
+        $attempt++;
+
+        if ($attempt > 3) return;
+
+        try {
             Metadata::create(array(
                 'key' => 'custom_' . $faker->word(),
                 'value' => $faker->sentence(1)
             ));
+        } catch (\Illuminate\Database\QueryException $e) {
+            $this->seedCustomData($attempt);
         }
     }
 }
