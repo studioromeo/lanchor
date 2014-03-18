@@ -9,9 +9,19 @@ use Input;
 use Redirect;
 use Anchor\Core\Models\Post;
 use Anchor\Core\Models\Category;
+use Anchor\Core\Services\ValidationException;
 
 class PostController extends Controller
 {
+
+	protected $post;
+	protected $category;
+
+	public function __construct(Post $post, Category $category)
+	{
+		$this->post = $post;
+		$this->category = $category;
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -20,8 +30,8 @@ class PostController extends Controller
 	 */
 	public function index()
 	{
-		$posts      = Post::orderBy('updated_at', 'desc')->paginate(Config::get('meta.posts_per_page'));
-		$categories = Category::all();
+		$posts      = $this->post->orderBy('updated_at', 'desc')->paginate(Config::get('meta.posts_per_page'));
+		$categories = $this->category->all();
 
 		return View::make('core::posts.index', compact('posts', 'categories'));
 	}
@@ -33,8 +43,8 @@ class PostController extends Controller
 	 */
 	public function filterByCategory($slug)
 	{
-		$posts      = Category::whereSlug($slug)->first()->posts()->paginate(Config::get('meta.posts_per_page'));
-		$categories = Category::all();
+		$posts      = $this->category->whereSlug($slug)->first()->posts()->paginate(Config::get('meta.posts_per_page'));
+		$categories = $this->category->all();
 
 		return View::make('core::posts.index', compact('posts', 'categories'));
 	}
@@ -46,7 +56,7 @@ class PostController extends Controller
 	 */
 	public function create()
 	{
-		$categories = Category::lists('title', 'id');
+		$categories = $this->category->lists('title', 'id');
 		return View::make('core::posts.create', compact('categories'));
 	}
 
@@ -57,26 +67,17 @@ class PostController extends Controller
 	 */
 	public function store()
 	{
-		$rules = array(
-			'title' => 'required',
-			'slug'  => 'required|alpha_dash|unique:posts'
-		);
+		try
+		{
+			$this->post->fill(Input::all())->isValid()->save();
 
-		$validator = \Validator::make(Input::all(), $rules, \Lang::get('core::posts'));
-
-		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validator)->withInput();
+			return Redirect::route('admin.posts.index')
+				->with('message', 'core::posts.created');
 		}
-
-		// This should be Post::create($input) really let the model handle data!
-		$post = new Post;
-		$post->fill(Input::all());
-		$post->author = 1;
-		$post->comments = (bool) Input::get('comments');
-		$post->save();
-
-		return Redirect::route('admin.posts.index')
-			->with('message', 'core::posts.created');
+		catch(ValidationException $e)
+		{
+			return Redirect::back()->withInput()->withErrors($e->getErrors());
+		}
 	}
 
 	/**
@@ -85,10 +86,7 @@ class PostController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
-		// nah we dont use this !@@%$£%$&%
-	}
+	public function show($id) {}
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -98,8 +96,8 @@ class PostController extends Controller
 	 */
 	public function edit($id)
 	{
-		$post = Post::find($id);
-		$categories = Category::lists('title', 'id');
+		$post = $this->post->find($id);
+		$categories = $this->category->lists('title', 'id');
 
 		return View::make('core::posts.edit', compact('post', 'categories'));
 	}
@@ -112,25 +110,28 @@ class PostController extends Controller
 	 */
 	public function update($id)
 	{
-		$rules = array(
-			'title' => 'required',
-			'slug'  => "required|alpha_dash|unique:posts,slug,{$id}"
-		);
+		// $rules = array(
+		// 	'title' => 'required',
+		// 	'slug'  => "required|alpha_dash|unique:posts,slug,{$id}"
+		// );
 
-		$validator = \Validator::make(Input::all(), $rules, \Lang::get('core::posts'));
+		// $validator = \Validator::make(Input::all(), $rules, \Lang::get('core::posts'));
 
-		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validator)->withInput();
+		// if ($validator->fails()) {
+		// 	return Redirect::back()->withErrors($validator)->withInput();
+		// }
+
+		try
+		{
+			$this->post->findOrFail($id)->update(Input::all());
+
+			return Redirect::route('admin.posts.edit', array($id))
+				->with('message', 'core::posts.updated');
 		}
-
-		$post = Post::find($id);
-
-		$post->fill(Input::all());
-		$post->comments = (bool) Input::get('comments');
-		$post->save();
-
-		return Redirect::route('admin.posts.edit', array($id))
-			->with('message', 'core::posts.updated');
+		catch(ValidationException $e)
+		{
+			return Redirect::back()->withInput()->withErrors($e->getErrors());
+		}
 	}
 
 	/**
@@ -142,7 +143,7 @@ class PostController extends Controller
 	public function destroy($id)
 	{
 		// Remove the post!
-		Post::destroy($id);
+		$this->post->destroy($id);
 		return Redirect::route('admin.posts.index')
 			->with('message', 'core::posts.deleted');
 	}

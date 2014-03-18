@@ -22,7 +22,7 @@ class SimplePresenter extends Presenter {
      * Get HTML wrapper for disabled text.
      *
      * @param  string  $text
-     * @return string
+     * @return boolean
      */
     public function getDisabledTextWrapper($text)
     {
@@ -33,7 +33,7 @@ class SimplePresenter extends Presenter {
      * Get HTML wrapper for active text.
      *
      * @param  string  $text
-     * @return string
+     * @return boolean
      */
     public function getActivePageWrapper($text)
     {

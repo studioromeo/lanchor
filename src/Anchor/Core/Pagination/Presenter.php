@@ -47,9 +47,7 @@ class Presenter extends BasePresenter {
      */
     public function render()
     {
-        $content = $this->getPageSlider();
-
-        return $this->getPrevious().$content.$this->getNext();
+        return $this->getPrevious() . $this->getPageSlider() . $this->getNext();
     }
 
     /**

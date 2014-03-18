@@ -2,11 +2,35 @@
 
 namespace Anchor\Core\Models;
 
+use Anchor\Core\Services\ValidationException;
 use Eloquent;
+use Validator;
+use Lang;
 
 class Post extends Eloquent
 {
     protected $guarded = array();
+    protected $translations = 'core::posts';
+
+    protected $original = array(
+        'author' => 1, // by default assign to author admin?
+        'comments' => false
+    );
+
+    protected $rules = array(
+        'title' => 'required',
+        'slug'  => 'required|alpha_dash|unique:posts'
+    );
+
+    public function isValid()
+    {
+        $validation = Validator::make($this->attributes, $this->rules, Lang::get($this->translations));
+
+        if ($validation->fails()) throw new ValidationException($validation->messages());
+
+        return true;
+    }
+
 
     public function category()
     {
