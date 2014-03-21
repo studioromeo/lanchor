@@ -4,18 +4,23 @@ namespace Anchor\Core\Pagination;
 
 use Illuminate\Pagination\Presenter as BasePresenter;
 
-class Presenter extends BasePresenter {
+class Presenter extends BasePresenter
+{
+    const FIRST_PAGE = 1;
+    const RANGE_PREV = 3;
+    const RANGE_NEXT = 4;
+    const RANGE_PAGE = 1;
 
     /**
      * Get HTML wrapper for a page link.
      *
      * @param  string  $url
-     * @param  int  $page
+     * @param  int     $page
      * @return string
      */
     public function getPageLinkWrapper($url, $page)
     {
-        return '<a href="'.$url.'">'.$page.'</a> ';
+        return "<a href=\"$url\">$page</a>&nbsp;";
     }
 
     /**
@@ -26,7 +31,7 @@ class Presenter extends BasePresenter {
      */
     public function getActivePageWrapper($text)
     {
-        return '<strong>'.$text.'</strong> ';
+        return "<strong>$text</strong>&nbsp;";
     }
 
     /**
@@ -37,7 +42,7 @@ class Presenter extends BasePresenter {
      */
     public function getDisabledTextWrapper($text)
     {
-        return '<strong'.$text.'</strong>';
+        return "<strong>$text</strong>&nbsp;";
     }
 
     /**
@@ -47,47 +52,46 @@ class Presenter extends BasePresenter {
      */
     public function render()
     {
-        $content = $this->getPageSlider();
-
-        return $this->getPrevious().$content.$this->getNext();
+        return $this->getPrevious() . $this->getPageSlider() . $this->getNext();
     }
 
     /**
      * Get the previous page pagination element.
      *
-     * @param  string  $text
-     * @return string
+     * @param  string  $prevTitle
+     * @param  string  $firstTitle
+     * @return string|null
      */
-    public function getPrevious($text = 'Previous')
+    public function getPrevious($prevTitle = 'Previous', $firstTitle = 'First')
     {
-        if ($this->currentPage > 1) {
+        if ($this->currentPage > self::FIRST_PAGE) {
+            $prevPage  = $this->paginator->getUrl($this->currentPage - self::RANGE_PAGE);
+            $firstPage = $this->paginator->getUrl(self::FIRST_PAGE);
 
-            $url = $this->paginator->getUrl($this->currentPage - 1);
-            $firstPage = $this->paginator->getUrl(1);
+            $firstPageLink = $this->getPageLinkWrapper($firstPage, $firstTitle);
+            $prevPageLink  = $this->getPageLinkWrapper($prevPage, $prevTitle);
 
-            $content = $this->getPageLinkWrapper($firstPage, 'First');
-            $content .= $this->getPageLinkWrapper($url, $text);
-
-            return $content;
+            return $firstPageLink . $prevPageLink;
         }
     }
 
     /**
      * Get the next page pagination element.
      *
-     * @param  string  $text
-     * @return string
+     * @param  string  $nextTitle
+     * @param  string  $lastTitle
+     * @return string|null
      */
-    public function getNext($text = 'Next')
+    public function getNext($nextTitle = 'Next', $lastTitle = 'Last')
     {
         if ($this->currentPage < $this->lastPage) {
-            $url = $this->paginator->getUrl($this->currentPage + 1);
-            $firstPage = $this->paginator->getUrl($this->lastPage);
+            $nextPage = $this->paginator->getUrl($this->currentPage + self::RANGE_PAGE);
+            $lastPage = $this->paginator->getUrl($this->lastPage);
 
-            $content = $this->getPageLinkWrapper($url, $text);
-            $content .= $this->getPageLinkWrapper($firstPage, 'Last');
+            $nextPageLink = $this->getPageLinkWrapper($nextPage, $nextTitle);
+            $lastPageLink = $this->getPageLinkWrapper($lastPage, $lastTitle);
 
-            return $content;
+            return $nextPageLink . $lastPageLink;
         }
     }
 
@@ -98,14 +102,14 @@ class Presenter extends BasePresenter {
      */
     protected function getPageSlider()
     {
-        if ($this->currentPage > 3) {
-            $start = $this->currentPage - 3;
+        if ($this->currentPage > self::RANGE_PREV) {
+            $start = $this->currentPage - self::RANGE_PREV;
         } else {
-            $start = 1;
+            $start = self::FIRST_PAGE;
         }
 
-        if (($this->lastPage - $this->currentPage) > 4) {
-            $end = $this->currentPage + 4;
+        if (($this->lastPage - $this->currentPage) > self::RANGE_NEXT) {
+            $end = $this->currentPage + self::RANGE_NEXT;
         } else {
             $end = $this->lastPage;
         }
