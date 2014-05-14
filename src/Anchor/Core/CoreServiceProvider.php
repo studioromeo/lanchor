@@ -42,17 +42,24 @@ class CoreServiceProvider extends ServiceProvider {
 		include __DIR__.'/../../routes.php';
 	}
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app->bind('registry', function() {
-			return new \Anchor\Core\Services\Registry;
-		});
-	}
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind('registry', function() {
+            return new \Anchor\Core\Services\Registry;
+        });
+
+        $this->app->error(function(\Laracasts\Validation\FormValidationException $exception, $code)
+        {
+            return \Redirect::back()->withInput()->withErrors($exception->getErrors());
+        });
+
+        $this->app->register('Laracasts\Validation\ValidationServiceProvider');
+    }
 
 	/**
 	 * Get the services provided by the provider.
